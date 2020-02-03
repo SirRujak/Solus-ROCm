@@ -16,12 +16,9 @@ setup      : |
     ./configure -bindir usr/bin \
                 -mandir usr/share/man \
                 -sitelib %libdir%/ocaml \
-                -config %PREFIX%/lib64/tmpfiles.d/findlib.conf \
+                -config /etc/findlib/findlib.conf \
                 -no-custom
 build      : |
     %make all
 install    : |
-    pwd
-    ls /home/build/YPKG/root/findlib/build/findlib-1.8.1
-    cat /home/build/YPKG/root/findlib/build/findlib-1.8.1/Makefile.config
     %make_install
