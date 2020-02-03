@@ -1,1 +1,0 @@
-Added lld-roc-ocl-2.5.0.tar.gz tarball because this one together with 2 others need to be in the same package.yml file. When downloading directly from official ROCm repository they have the same name. So I renamed the tarball and use this repo as source.

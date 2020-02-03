@@ -1,8 +1,8 @@
 name       : numactl
-version    : 2.0.12
-release    : 1
+version    : 2.0.13
+release    : 2
 source     :
-    - https://github.com/numactl/numactl/archive/v2.0.12.tar.gz : 7c3e819c2bdeb883de68bafe88776a01356f7ef565e75ba866c4b49a087c6bdf
+    - https://github.com/numactl/numactl/archive/v2.0.13.tar.gz : 97ee012b2f294903530424b4ff7f28bcaad6a356897ce8777383f87e5c2e325d
 license    : GPL-2.0
              GLPL-2.1
 component  : programming.devel

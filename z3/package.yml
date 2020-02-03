@@ -1,8 +1,8 @@
 name       : z3
-version    : 4.8.5
-release    : 1
+version    : 4.8.7
+release    : 2
 source     :
-    - https://github.com/Z3Prover/z3/archive/Z3-4.8.5.tar.gz : 4e8e232887ddfa643adb6a30dcd3743cb2fa6591735fbd302b49f7028cdc0363
+    - https://github.com/Z3Prover/z3/archive/z3-4.8.7.tar.gz : 8c1c49a1eccf5d8b952dadadba3552b0eac67482b8a29eaad62aa7343a0732c3
 license    : MIT
 component  : programming.devel
 summary    : Z3 is a theorem prover from Microsoft Research.

@@ -1,8 +1,8 @@
 name       : ROCT
-version    : 2.7.0
-release    : 1
+version    : 3.0.0
+release    : 2
 source     : 
-    - https://github.com/RadeonOpenCompute/ROCT-Thunk-Interface/archive/roc-2.7.0.tar.gz : 11e6dceec675d3c5d5dfb7e9b6daae29a57c7904a6d36515a4832be32e303c47
+    - https://github.com/RadeonOpenCompute/ROCT-Thunk-Interface/archive/roc-3.0.0.tar.gz : d6d91397fcd926bd90fae8dfe81d69653273e8b68cd47f822576838f2ac96729
 license    : MIT
 component  : programming.devel
 summary    : This repository includes the user-mode API interfaces used to interact with the ROCk driver. Currently supported agents include only the AMD/ATI Fiji family of discrete GPUs.
@@ -28,4 +28,3 @@ install    : |
     cd ../include
     install -Dm00644 hsakmt.h $installdir/usr/include/hsakmt.h
     install -Dm00644 hsakmttypes.h $installdir/usr/include/hsakmttypes.h
-    install -Dm00644 linux/kfd_ioctl.h $installdir/usr/include/linux/kfd_ioctl.h

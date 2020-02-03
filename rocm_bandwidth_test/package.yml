@@ -1,8 +1,8 @@
 name       : rocm_bandwidth_test
-version    : 1.3.0
-release    : 1
+version    : 2.3.10
+release    : 2
 source     :
-    - https://github.com/RadeonOpenCompute/rocm_bandwidth_test/archive/1.3.0.tar.gz : 24f185d2c9f704c554e13fcc18c75d5e744df3978f750945848bbd666e98d273
+    - https://github.com/RadeonOpenCompute/rocm_bandwidth_test/archive/rbt-2.3.10.tar.gz : a2c9418f590718ffa311d7e618f344d831024a0619f0c3741461fd8acc0867af
 license    : Open Source License
 component  : programming.devel
 summary    : RocBandwidthTest is designed to capture the performance characteristics of buffer copying and kernel read/write operations. The help screen of the benchmark shows various options one can use in initiating cop/read/writer operations. In addition one can also query the topology of the system in terms of memory pools and their agents
@@ -23,4 +23,4 @@ build      : |
 install    : |
     cd build   
     mkdir -p $installdir/usr/bin
-    install -Dm00755 rocm_bandwidth_test $installdir/usr/bin/rocm_bandwidth_test
+    install -Dm00755 rocm-bandwidth-test $installdir/usr/bin/rocm_bandwidth_test

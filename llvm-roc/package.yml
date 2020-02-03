@@ -1,34 +1,41 @@
 name       : llvm-roc
-version    : 2.5.0
-release    : 1
+version    : 2.10.0
+release    : 2
 source     :
-    - https://github.com/RadeonOpenCompute/llvm/archive/roc-ocl-2.5.0.tar.gz : fbb005d13c01020878dbc5546b57cce10bcdbd9b605d3c5a27955819e6c57507
-    - https://github.com/RadeonOpenCompute/clang/archive/roc-2.5.0.tar.gz : 1611d533b670f2bd58ac1dce6cfb2a019ef6abdf119d657042e2a46c35dffe7e
-    - https://github.com/saitam757/ROCm-Solbuild/raw/master/renamed_rocm_packages/lld-roc-ocl-2.5.0.tar.gz : a910c565d249965be4eb0f5a00698b77181573271e3ec3f277c73297af9ed160
+    - https://github.com/RadeonOpenCompute/llvm/archive/roc-ocl-2.10.0.tar.gz : c46ec3568b754a7aced6139bcc254d39ddb89016b282c467ae1b5536d8021540
+    - https://github.com/RadeonOpenCompute/clang/archive/roc-2.10.0.tar.gz : acdebf229a2120ad0ccdc48a6b0e863a6a4d89f46bb62e7296f2f16bbc4a04a7
+    - https://github.com/RadeonOpenCompute/lld/archive/roc-ocl-2.10.0.zip : 28d89de1d8e107f1ddf6efb81ca152049b29b8d90aca89414e46ad0c93e0789d
 license    : Apache License 2.0
 component  : programming.devel
 summary    : "ROCm llvm,lld,clang"
 description: |
     "ROCm llvm,lld,clang"
+clang      : yes
 builddeps  :
     - ROCR
     - ROCR-devel
     - z3
     - z3-devel
 setup      : |
-    tar xvzf "${sources}/roc-2.5.0.tar.gz"
-    tar xvzf "${sources}/lld-roc-ocl-2.5.0.tar.gz"
-
-    ln -s lld-roc-ocl-2.5.0 tools/lld
-    ln -s roc-2.5.0 tools/clang
+    tar xvzf "${sources}/roc-2.10.0.tar.gz"
+    ls "${sources}"
+    unzip $sources/roc-ocl-2.10.0.zip  -d lld-ocl-2.10.0
+    mv lld-ocl-2.10.0/lld-roc-ocl-2.10.0 ../lld
+    mv clang-roc-2.10.0 ../clang
 
     mkdir -p build/bin
     
     cd build
-    %cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%libdir%/llvm/roc-2.5.0 -DLLVM_TARGETS_TO_BUILD="AMDGPU;X86" ..
+    pwd
+    ls ./
+    ls ../
+    ls /home/build/YPKG/root/llvm-roc/build/llvm-roc-ocl-2.10.0/..
+    ls /home/build/YPKG/root/llvm-roc/build/llvm-roc-ocl-2.10.0/../clang
+    ls /home/build/YPKG/root/llvm-roc/build/lld
+    %cmake -j 1 -LLVM_PARALLEL_LINK_JOBS=1 -DLLVM_USE_LINKER=lld -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%libdir%/llvm/roc-2.10.0 -DLLVM_ENABLE_PROJECTS="clang;lld" -DLLVM_TARGETS_TO_BUILD="AMDGPU;X86" ..
 build      : |
-    cd build
+    cd llvm-roc-ocl-2.10.0/build
     %make
 install    : |
-    cd build
+    cd llvm-roc-ocl-2.10.0/build
     %make_install

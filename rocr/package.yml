@@ -1,8 +1,8 @@
 name       : ROCR
-version    : 2.7.0
-release    : 1
+version    : 3.0.0
+release    : 2
 source     :
-    - https://github.com/RadeonOpenCompute/ROCR-Runtime/archive/roc-2.7.0.tar.gz : 726b6556d4072caa35e751e067f4e5dd283583ed0aff49d72af14e0449bfe318
+    - https://github.com/RadeonOpenCompute/ROCR-Runtime/archive/roc-3.0.0.tar.gz : 6d133e285535adef61464f7f0377fe97c480323ebfd242b34b5585b8bb41f99e
 license    : NCSA
 component  : programming.devel
 summary    : This repository includes the user-mode API interfaces and libraries necessary for host applications to launch compute kernels to available HSA ROCm kernel agents.

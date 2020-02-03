@@ -1,8 +1,8 @@
 name       : rocminfo
-version    : 2.7.0
-release    : 1
+version    : 3.0.0
+release    : 2
 source     :
-    - https://github.com/RadeonOpenCompute/rocminfo/archive/roc-2.7.0.tar.gz : 5f7ec4665c4100e69c4216cee3974f03d1017311f9d297ef7c9cf3b58e7edb0f
+    - https://github.com/RadeonOpenCompute/rocminfo/archive/roc-3.0.0.tar.gz : 2e3f9613461b1d8f335f135e3b2edb6b0ce5c9d3a3b2cfa9b7a3456273a73840
 license    : Open Source License (NCSA)
 component  : programming.devel
 summary    : ROCm Application for Reporting System Info
@@ -14,7 +14,6 @@ builddeps  :
     - ROCR
     - ROCR-devel
 setup      : |
-    %patch -p1 < $pkgfiles/01_arraysize.patch
     mkdir -p build
     cd build
     %cmake -DROCM_DIR=/usr -DROCRTST_BLD_TYPE=Release -DROCRTST_BLD_BITS=64 ..

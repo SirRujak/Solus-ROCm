@@ -1,8 +1,8 @@
 name       : ROCm-Device-Libs
-version    : 2.5.0
+version    : 3.0.0
 release    : 1
 source     :
-    - https://github.com/RadeonOpenCompute/ROCm-Device-Libs/archive/roc-2.5.0.tar.gz : d44b7161f9c3332c36c831119678d99fa9193056bcb79b2f85e1d8a22bece027
+    - https://github.com/RadeonOpenCompute/ROCm-Device-Libs/archive/roc-ocl-3.0.0.tar.gz : 3bb3c6e3be39a9e9dcf616d71f5414014a4c1aa17ff8145baafaf99300241928
 license    : Open Source License
 component  : programming.devel
 summary    : ROCm Device libraries.
@@ -13,9 +13,15 @@ builddeps  :
     - ROCR-devel
     - ROCR
     - ROCR-devel
+    - llvm-roc
+    - z3
+    - z3-devel
 setup      : |
-    %configure
+    mkdir -p build
+    cd build
 build      : |
-    %make
+    ls /usr/lib64/llvm
+    export LLVM_BUILD=%libdir%/llvm/roc-2.10.0
+    CC=$LLVM_BUILD/bin/clang %cmake -DLLVM_DIR=$LLVM_BUILD 
 install    : |
     %make_install
