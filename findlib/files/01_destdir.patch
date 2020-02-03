@@ -1,0 +1,9 @@
+--- Makefile.config 2019-07-18 12:49:10.000000000 +0200
++++ Makefile.config 2019-08-28 22:20:56.399906845 +0200
+@@ -1,3 +1,3 @@
+-OCAML_CORE_STDLIB=/usr/lib64/ocaml
++OCAML_CORE_STDLIB=/home/build/YPKG/root/findlib/install/usr/lib64/ocaml
+-OCAML_CORE_BIN=/usr/bin
++OCAML_CORE_BIN=/home/build/YPKG/root/findlib/install/usr/bin
+-OCAML_CORE_MAN=/usr/local/man
++OCAML_CORE_MAN=/home/build/YPKG/root/findlib/install/usr/local/man

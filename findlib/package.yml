@@ -12,13 +12,19 @@ clang: yes
 builddeps  :
     - ocaml
     - ocamlbuild
+rundeps    :
+    - ocaml
+    - ocamlbuild
 setup      : |
-    ./configure -bindir usr/bin \
-                -mandir usr/share/man \
-                -sitelib %libdir%/ocaml \
-                -config /etc/findlib/findlib.conf \
+    ./configure -bindir $installdir/usr/bin \
+                -mandir $installdir/usr/share/man \
+                -sitelib $installdir/usr/lib64/ocaml \
+                -config $installdir/etc/findlib/findlib.conf \
                 -no-custom
+    cat Makefile.config
+    %patch < $pkgfiles/01_destdir.patch
 build      : |
     %make all
 install    : |
+    cat Makefile.config
     %make_install
