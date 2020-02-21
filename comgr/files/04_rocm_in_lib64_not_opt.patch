@@ -1,0 +1,18 @@
+--- CMakeLists.txt	2020-02-19 13:40:46.064425579 -0600
++++ CMakeLists.txt	2020-02-19 14:14:28.799275455 -0600
+@@ -22,13 +22,13 @@
+ set(PROJECT_VERSION
+   "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
+ 
+-find_package(ROCM PATHS "/opt/rocm")
++find_package(ROCM PATHS "/usr/lib64/rocm")
+ if (ROCM_FOUND)
+   include(ROCMSetupVersion)
+   rocm_setup_version(VERSION "${PROJECT_VERSION}")
+ endif()
+ 
+-find_package(Clang REQUIRED CONFIG PATHS ${LLVM_DIR} "/opt/rocm/llvm" NO_SYSTEM_ENVIRONMENT_PATH)
++find_package(Clang REQUIRED CONFIG PATHS ${LLVM_DIR} "/usr/lib64/rocm/llvm" NO_SYSTEM_ENVIRONMENT_PATH)
+ add_definitions(${LLVM_DEFINITIONS})
+ include_directories(${LLVM_INCLUDE_DIRS})
+ link_directories(${LLVM_LIBRARY_DIRS})

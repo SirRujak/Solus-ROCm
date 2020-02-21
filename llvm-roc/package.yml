@@ -1,10 +1,8 @@
 name       : llvm-roc
-version    : 2.10.0
-release    : 2
+version    : 3.0.0
+release    : 3
 source     :
-    - https://github.com/RadeonOpenCompute/llvm/archive/roc-ocl-2.10.0.tar.gz : c46ec3568b754a7aced6139bcc254d39ddb89016b282c467ae1b5536d8021540
-    - https://github.com/RadeonOpenCompute/clang/archive/roc-2.10.0.tar.gz : acdebf229a2120ad0ccdc48a6b0e863a6a4d89f46bb62e7296f2f16bbc4a04a7
-    - https://github.com/RadeonOpenCompute/lld/archive/roc-ocl-2.10.0.zip : 28d89de1d8e107f1ddf6efb81ca152049b29b8d90aca89414e46ad0c93e0789d
+    - https://github.com/RadeonOpenCompute/llvm-project/archive/roc-ocl-3.0.0.tar.gz : 7715db8fd6322bdda4a75a9220cb6c747ca7e93e94ff158d7689d10f984efa45
 license    : Apache License 2.0
 component  : programming.devel
 summary    : "ROCm llvm,lld,clang"
@@ -12,30 +10,32 @@ description: |
     "ROCm llvm,lld,clang"
 clang      : yes
 builddeps  :
+    - git
+    - libedit
+    - libedit-devel
+    - ocaml
+    - findlib
     - ROCR
     - ROCR-devel
+    - swig
     - z3
     - z3-devel
 setup      : |
-    tar xvzf "${sources}/roc-2.10.0.tar.gz"
-    ls "${sources}"
-    unzip $sources/roc-ocl-2.10.0.zip  -d lld-ocl-2.10.0
-    mv lld-ocl-2.10.0/lld-roc-ocl-2.10.0 ../lld
-    mv clang-roc-2.10.0 ../clang
-
-    mkdir -p build/bin
+    mkdir -p build
     
-    cd build
-    pwd
-    ls ./
-    ls ../
-    ls /home/build/YPKG/root/llvm-roc/build/llvm-roc-ocl-2.10.0/..
-    ls /home/build/YPKG/root/llvm-roc/build/llvm-roc-ocl-2.10.0/../clang
-    ls /home/build/YPKG/root/llvm-roc/build/lld
-    %cmake -j 1 -LLVM_PARALLEL_LINK_JOBS=1 -DLLVM_USE_LINKER=lld -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%libdir%/llvm/roc-2.10.0 -DLLVM_ENABLE_PROJECTS="clang;lld" -DLLVM_TARGETS_TO_BUILD="AMDGPU;X86" ..
 build      : |
-    cd llvm-roc-ocl-2.10.0/build
-    %make
+    ls
+    ls ../
+    cd build
+    %cmake -G Ninja -DLLVM_USE_LINKER=lld -D_FORTIFY_SOURCE=0 -DLLVM_ENABLE_PROJECTS='clang;libcxx;libcxxabi;lld' -DCMAKE_INSTALL_PREFIX=%libdir%/rocm/llvm -DCMAKE_BUILD_TYPE=RelWithDebInfo ../llvm
+
 install    : |
-    cd llvm-roc-ocl-2.10.0/build
-    %make_install
+    cd build
+    %cmake --build -DCMAKE_INSTALL_PREFIX=%libdir%/rocm/llvm .
+    ls
+    export 'CFLAGS=-mtune=generic -march=x86-64 -g2 -O2 -pipe -fPIC -D_FORTIFY_SOURCE=0 -Wformat -Wformat-security -fstack-protector-strong --param ssp-buffer-size=32 -fasynchronous-unwind-tables -ftree-vectorize -feliminate-unused-debug-types -Wall -Wno-error -Wp,-D_REENTRANT'
+    export 'CXXFLAGS=-mtune=generic -march=x86-64 -g2 -O2 -pipe -fPIC -D_FORTIFY_SOURCE=0 -fstack-protector-strong --param ssp-buffer-size=32 -fasynchronous-unwind-tables -ftree-vectorize -feliminate-unused-debug-types -Wall -Wno-error -Wp,-D_REENTRANT'
+
+
+    DESTDIR=/home/build/YPKG/root/llvm-roc/install
+    DESTDIR=$installdir/rocm %ninja_install -j24 -C .

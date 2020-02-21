@@ -1,0 +1,9 @@
+--- api/opencl/amdocl/CMakeLists.txt	2020-02-19 21:09:36.481426844 -0600
++++ api/opencl/amdocl/CMakeLists.txt	2020-02-19 21:10:02.540424909 -0600
+@@ -82,3 +82,6 @@
+ else()
+   target_link_libraries(amdocl64 opencl_driver oclelf pthread dl ${ROCT_LIBRARIES} ${ROCR_LIBRARIES})
+ endif()
++
++file(GENERATE OUTPUT "${CMAKE_BINARY_DIR}/amdocl64.icd" CONTENT "$<TARGET_FILE_NAME:amdocl64>")
++install(FILES "${CMAKE_BINARY_DIR}/amdocl64.icd" DESTINATION "${CMAKE_INSTALL_FULL_SYSCONFDIR}/OpenCL/vendors/")

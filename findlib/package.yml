@@ -23,8 +23,22 @@ setup      : |
                 -no-custom
     cat Makefile.config
     %patch < $pkgfiles/01_destdir.patch
+    ls
 build      : |
     %make all
 install    : |
     cat Makefile.config
     %make_install
+    rm -r $installdir/usr/lib64/ocaml/bigarray
+    rm -r $installdir/usr/lib64/ocaml/bytes
+    rm -r $installdir/usr/lib64/ocaml/compiler-libs
+    rm -r $installdir/usr/lib64/ocaml/dynlink
+    rm -r $installdir/usr/lib64/ocaml/graphics
+    rm -r $installdir/usr/lib64/ocaml/ocamlbuild
+    rm -r $installdir/usr/lib64/ocaml/ocamldoc
+    rm -r $installdir/usr/lib64/ocaml/raw_spacetime
+    rm -r $installdir/usr/lib64/ocaml/stdlib
+    rm -r $installdir/usr/lib64/ocaml/str
+    rm -r $installdir/usr/lib64/ocaml/threads
+    rm -r $installdir/usr/lib64/ocaml/unix
+

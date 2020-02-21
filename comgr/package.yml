@@ -1,0 +1,35 @@
+name       : rocm-comgr
+version    : 2.10.0
+release    : 2
+source     :
+    - https://github.com/RadeonOpenCompute/ROCm-CompilerSupport/archive/roc-3.0.0.tar.gz : c7f42508ed32c86427387b9e57b3f54a08211c335c7dd35aa084653a1b48b5ef
+license    : Apache License 2.0
+component  : programming.devel
+summary    : "ROCm llvm,lld,clang"
+description: |
+    "ROCm comgr"
+clang      : yes
+builddeps  :
+    - llvm-roc
+    - ROCm-Device-Libs
+    - ROCm-Device-Libs-devel
+    - z3
+    - z3-devel
+setup      : |
+    cd lib/comgr
+    %patch < $pkgfiles/01_clangpath.patch
+    %patch < $pkgfiles/02_dependencies.patch
+    %patch < $pkgfiles/03_findlldincludes.patch
+    %patch -v < $pkgfiles/04_rocm_in_lib64_not_opt.patch
+    mkdir -p build
+build      : |
+    cd lib/comgr/build
+    export LLVM_BUILD=%libdir%/rocm/llvm
+    cmake -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_PREFIX_PATH="LLVM_BUILD;$LLVM_BUILD/lib/cmake/clang" \
+        -DClang_DIR=$LLVM_BUILD/lib/cmake/clang \
+         ..
+install    : |
+    cd lib/comgr/build
+
+    %make_install

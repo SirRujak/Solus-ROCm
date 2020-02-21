@@ -1,0 +1,71 @@
+--- runtime/device/device.hpp	2019-12-17 15:35:08.000000000 -0600
++++ runtime/device/device.hpp	2020-02-19 17:56:47.807285453 -0600
+@@ -21,7 +21,7 @@
+ 
+ #if defined(WITH_LIGHTNING_COMPILER) && !defined(USE_COMGR_LIBRARY)
+ #include "caching/cache.hpp"
+-#include "driver/AmdCompiler.h"
++#include "AmdCompiler.h"
+ #endif  // defined(WITH_LIGHTNING_COMPILER) && ! defined(USE_COMGR_LIBRARY)
+ #include "acl.h"
+ 
+--- runtime/device/devprogram.cpp	2019-12-17 15:35:08.000000000 -0600
++++ runtime/device/devprogram.cpp	2020-02-19 17:59:34.124273110 -0600
+
+@@ -14,7 +14,7 @@
+ 
+ #if defined(WITH_LIGHTNING_COMPILER) || defined(USE_COMGR_LIBRARY)
+ #ifndef USE_COMGR_LIBRARY
+-#include "driver/AmdCompiler.h"
++#include "AmdCompiler.h"
+ #include "libraries.amdgcn.inc"
+ #include "opencl1.2-c.amdgcn.inc"
+ #include "opencl2.0-c.amdgcn.inc"
+
+--- runtime/device/devprogram.hpp	2019-12-17 15:35:08.000000000 -0600
++++ runtime/device/devprogram.hpp	2020-02-19 18:01:11.021265918 -0600
+@@ -11,7 +11,7 @@
+ 
+ #if defined(WITH_LIGHTNING_COMPILER) || defined(USE_COMGR_LIBRARY)
+ #ifndef USE_COMGR_LIBRARY
+-#include "driver/AmdCompiler.h"
++#include "AmdCompiler.h"
+ #else
+ #include "amd_comgr.h"
+ #endif
+
+--- runtime/device/rocm/rocdevice.cpp	2019-12-17 15:35:08.000000000 -0600
++++ runtime/device/rocm/rocdevice.cpp	2020-02-19 18:02:24.958260431 -0600
+@@ -20,7 +20,7 @@
+ #include "device/rocm/rocvirtual.hpp"
+ #include "device/rocm/rocprogram.hpp"
+ #if defined(WITH_LIGHTNING_COMPILER) && ! defined(USE_COMGR_LIBRARY)
+-#include "driver/AmdCompiler.h"
++#include "AmdCompiler.h"
+ #endif  // defined(WITH_LIGHTNING_COMPILER) && ! defined(USE_COMGR_LIBRARY)
+ #include "device/rocm/rocmemory.hpp"
+ #include "device/rocm/rocglinterop.hpp"
+
+--- runtime/device/rocm/rockernel.cpp	2019-12-17 15:35:08.000000000 -0600
++++ runtime/device/rocm/rockernel.cpp	2020-02-19 18:04:00.400253347 -0600
+@@ -11,7 +11,7 @@
+ 
+ #if defined(WITH_LIGHTNING_COMPILER) || defined(USE_COMGR_LIBRARY)
+ #ifndef USE_COMGR_LIBRARY
+-#include "driver/AmdCompiler.h"
++#include "AmdCompiler.h"
+ #endif
+ #include "llvm/Support/AMDGPUMetadata.h"
+ 
+
+--- runtime/device/rocm/rocprogram.cpp	2019-12-17 15:35:08.000000000 -0600
++++ runtime/device/rocm/rocprogram.cpp	2020-02-19 18:05:16.468247701 -0600
+@@ -10,7 +10,7 @@
+ #if defined(WITH_LIGHTNING_COMPILER) || defined(USE_COMGR_LIBRARY)
+ #include <gelf.h>
+ #ifndef USE_COMGR_LIBRARY
+-#include "driver/AmdCompiler.h"
++#include "AmdCompiler.h"
+ #include "libraries.amdgcn.inc"
+ #endif
+ #endif  // defined(WITH_LIGHTNING_COMPILER) || defined(USE_COMGR_LIBRARY)

@@ -1,0 +1,42 @@
+--- CMakeLists.txt	2020-02-19 17:35:21.602380914 -0600
++++ CMakeLists.txt	2020-02-20 15:37:30.400493248 -0600
+@@ -37,10 +37,21 @@
+   include_directories("${DIR}"
+   include_directories("${DIR}/clang")
+   include_directories("${DIR}/lld")
++  include_directories("${DIR}/c++/v1")
+   # TODO: move AMDGPU.h header to include folder
+   include_directories("${DIR}/llvm/Target/AMDGPU")
+ ENDFOREACH()
+ 
++message("")
++message("------------LLVM_DIR: ${LLVM_DIR}")
++message("---LLVM_INCLUDE_DIRS: ${LLVM_INCLUDE_DIRS}")
++message("---LLVM_LIBRARY_DIRS: ${LLVM_LIBRARY_DIRS}")
++message("-----------Clang_DIR: ${Clang_DIR}")
++message("--CLANG_INCLUDE_DIRS: ${CLANG_INCLUDE_DIRS}")
++message("----LLD_INCLUDE_DIRS: ${LLD_INCLUDE_DIRS}")
++message("---AMDDeviceLibs_DIR: ${AMDDeviceLibs_DIR}")
++message("")
++
+ # FIXME: Remove following if block after enabling COMGR by default
+ if (${USE_COMGR_LIBRARY} STREQUAL "no")
+   set(LLVM_INCLUDE_TESTS OFF CACHE BOOL "")
+@@ -99,7 +110,7 @@
+ 
+ ###--- Packaging ------------------------------------------------------------###
+ 
+-find_package(ROCM QUIET CONFIG PATHS /opt/rocm)
++find_package(ROCM QUIET CONFIG PATHS /usr/lib64/rocm)
+ include(ROCMSetupVersion)
+ rocm_setup_version( VERSION "2.0.0" )
+ 
+@@ -135,7 +146,7 @@
+ 
+ set(CPACK_PACKAGE_CONTACT "Advanced Micro Devices Inc.")
+ set(CPACK_PACKAGE_VENDOR "AMD")
+-set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/rocm/opencl")
++set(CPACK_PACKAGING_INSTALL_PREFIX "/usr/lib64/rocm/opencl")
+ 
+ set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+ 

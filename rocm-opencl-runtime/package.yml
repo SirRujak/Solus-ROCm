@@ -1,0 +1,84 @@
+name       : ROCm-OpenCL-Runtime
+version    : 3.0.0
+release    : 1
+source     :
+    - https://github.com/RadeonOpenCompute/ROCm-OpenCL-Runtime/archive/roc-3.0.0.tar.gz : c64612fb68289e68fd796987652fc74021d243b088f876ae0a0fc23e9cb6eb28
+    - https://github.com/KhronosGroup/OpenCL-ICD-Loader/archive/6c03f8b58fafd9dd693eaac826749a5cfad515f8.tar.gz : c94d5bb6dc980c4d41d73e2b81663a19aabe494e923e2d0eec72a4c95b318438
+license    : Open Source License
+component  : programming.devel
+summary    : ROCm OpenCL runtime.
+clang      : yes
+description: |
+    ROCm OpenCL runtime.
+builddeps  :
+    - findlib
+    - git
+    - ocaml
+    - z3
+    - z3-devel
+    - llvm-roc
+    - mesalib
+    - mesalib-devel
+    - ocl-icd
+    - rocm-cmake
+    - rocm-comgr
+    - ROCm-Device-Libs
+    - ROCm-Device-Libs-devel
+    - ROCT
+    - ROCT-devel
+    - ROCR
+    - ROCR-devel
+setup      : |
+    ls
+    ls runtime/device
+    %patch < $pkgfiles/01_change_install_location.patch
+    %patch -p0 < $pkgfiles/02_change_amdcompilerh.patch
+    %patch -p0 < $pkgfiles/03_change_opencl.patch
+    %patch -p0 < $pkgfiles/05_amdocl64icd.patch
+    %patch < $pkgfiles/06_infotest.patch
+
+    OPENCL_ICD_COMMIT="6c03f8b58fafd9dd693eaac826749a5cfad515f8"
+    ls $sources
+    tar xvzf "$sources/$OPENCL_ICD_COMMIT.tar.gz"
+    ls
+    mkdir -p api/opencl/khronos/
+    mv OpenCL-ICD-Loader-$OPENCL_ICD_COMMIT api/opencl/khronos/icd
+    rm -rf tools/clinfo
+    mkdir -p build
+    mkdir libs
+    export PATH=/usr/lib64/rocm/llvm/bin:/usr/lib64/ccache/bin:/bin:/usr/sbin:/sbin:%workdir%/libs
+    export LLVM_BUILD=%libdir%/rocm/llvm
+    ln -s $LLVM_BUILD/bin/ld.lld %workdir%/libs/ld
+    ls -l libs/ld
+    #ld --verbose | grep SEARCH_DIR | tr -s ' ;' \\012
+    cd build
+build      : |
+    cd build
+    export LLVM_BUILD=%libdir%/rocm/llvm
+    export CC=$LLVM_BUILD/bin/clang
+    export CXX=$LLVM_BUILD/bin/clang++
+    export PATH=/usr/lib64/rocm/llvm/bin:/usr/lib64/ccache/bin:/bin:/usr/sbin:/sbin:%workdir%/libs
+    alias cmake=%PREFIX%/bin/cmake
+    alias ld=$LLVM_BUILD/bin/ld.lld
+    ls %workdir%
+    ls %PREFIX%
+    %PREFIX%/bin/cmake -DLLVM_USE_LINKER=$LLVM_BUILD/bin/ld.lld \
+        -DUSE_COMGR_LIBRARY=yes \
+        -DLLVM_DIR="$LLVM_BUILD" \
+        -DClang_DIR="$LLVM_BUILD/lib/cmake/clang/" \
+        -DCMAKE_C_COMPILER=$LLVM_BUILD/bin/clang \
+        -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS} -std=gnu17 -v" \
+        -DCMAKE_CXX_COMPILER=$LLVM_BUILD/bin/clang++ \
+        -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -stdlib=libc++ -v" \
+        -DCMAKE_EXE_LINKER_FLAGS="${CMAKE_EXE_LINKER_FLAGS} -stdlib=libstdc++ -lc++abi " \
+        -DCMAKE_MAKE_PROGRAM=%PREFIX%/bin/make \
+        ..
+install    : |
+    export PATH=/usr/lib64/rocm/llvm/bin:/usr/lib64/ccache/bin:/bin:/usr/sbin:/sbin:%workdir%/libs
+    cd build
+    export DESTDIR=%installroot%
+    %PREFIX%/bin/make install -j24
+
+    mkdir -p %installroot%/usr/share/OpenCL/vendors
+    mv %installroot%/usr/local/etc/OpenCL/vendors/amdocl64.icd %installroot%/usr/share/OpenCL/vendors/amdocl64.icd
+    rm -r %installroot%/usr/local/etc
