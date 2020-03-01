@@ -1,0 +1,24 @@
+--- CMakeLists.txt	2020-02-20 15:37:30.400493248 -0600
++++ CMakeLists.txt	2020-02-28 12:32:21.688802536 -0600
+@@ -103,7 +103,7 @@
+ add_subdirectory(api/opencl/amdocl)
+ add_subdirectory(compiler/lib/loaders/elf/utils/libelf)
+ add_subdirectory(runtime)
+-#add_subdirectory(tools/clinfo)
++add_subdirectory(tools/clinfo)
+ 
+ set(BUILD_SHARED_LIBS "Build shared libs" ON)
+ #add_subdirectory(api/opencl/khronos/icd)
+@@ -115,9 +115,9 @@
+ rocm_setup_version( VERSION "2.0.0" )
+ 
+ # MAIN package
+-#install(PROGRAMS $<TARGET_FILE:clinfo>
+-#        DESTINATION bin/x86_64
+-#        COMPONENT MAIN)
++install(PROGRAMS $<TARGET_FILE:clinfo>
++        DESTINATION lib64
++        COMPONENT MAIN)
+ install(PROGRAMS $<TARGET_FILE:amdocl64>
+         DESTINATION lib64
+         COMPONENT MAIN)

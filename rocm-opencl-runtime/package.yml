@@ -20,6 +20,7 @@ builddeps  :
     - mesalib
     - mesalib-devel
     - ocl-icd
+    - ocl-icd-devel
     - rocm-cmake
     - rocm-comgr
     - ROCm-Device-Libs
@@ -36,6 +37,8 @@ setup      : |
     %patch -p0 < $pkgfiles/03_change_opencl.patch
     %patch -p0 < $pkgfiles/05_amdocl64icd.patch
     %patch < $pkgfiles/06_infotest.patch
+    %patch < $pkgfiles/07_install_opencl.patch
+    %patch -p0 < $pkgfiles/08_stdlib_clinfo.patch
 
     OPENCL_ICD_COMMIT="6c03f8b58fafd9dd693eaac826749a5cfad515f8"
     ls $sources
@@ -43,7 +46,7 @@ setup      : |
     ls
     mkdir -p api/opencl/khronos/
     mv OpenCL-ICD-Loader-$OPENCL_ICD_COMMIT api/opencl/khronos/icd
-    rm -rf tools/clinfo
+    #rm -rf tools/clinfo
     mkdir -p build
     mkdir libs
     export PATH=/usr/lib64/rocm/llvm/bin:/usr/lib64/ccache/bin:/bin:/usr/sbin:/sbin:%workdir%/libs
@@ -73,11 +76,24 @@ build      : |
         -DCMAKE_EXE_LINKER_FLAGS="${CMAKE_EXE_LINKER_FLAGS} -stdlib=libstdc++ -lc++abi " \
         -DCMAKE_MAKE_PROGRAM=%PREFIX%/bin/make \
         ..
+
+    # cmake for clinfo
+    cd ../tools/clinfo
+    %PREFIX%/bin/cmake -DLLVM_USE_LINKER=$LLVM_BUILD/bin/ld.lld \
+        -DLLVM_DIR="$LLVM_BUILD" \
+        -DClang_DIR="$LLVM_BUILD/lib/cmake/clang/" \
+        -DCMAKE_C_COMPILER=$LLVM_BUILD/bin/clang \
+        -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS} -std=gnu17 -v" \
+        -DCMAKE_CXX_COMPILER=$LLVM_BUILD/bin/clang++ \
+        -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -stdlib=libc++ -v" \
+        -DCMAKE_EXE_LINKER_FLAGS="${CMAKE_EXE_LINKER_FLAGS} -stdlib=libstdc++ -lc++abi " \
+        -DCMAKE_MAKE_PROGRAM=%PREFIX%/bin/make
+
 install    : |
     export PATH=/usr/lib64/rocm/llvm/bin:/usr/lib64/ccache/bin:/bin:/usr/sbin:/sbin:%workdir%/libs
     cd build
     export DESTDIR=%installroot%
-    %PREFIX%/bin/make install -j24
+    %PREFIX%/bin/make install -j1
 
     mkdir -p %installroot%/usr/share/OpenCL/vendors
     mv %installroot%/usr/local/etc/OpenCL/vendors/amdocl64.icd %installroot%/usr/share/OpenCL/vendors/amdocl64.icd
