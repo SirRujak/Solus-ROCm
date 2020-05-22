@@ -1,6 +1,6 @@
---- CMakeLists.txt	2020-02-04 15:21:57.375085786 -0600
-+++ CMakeLists.txt	2020-02-19 13:37:26.741440373 -0600
-@@ -203,7 +203,11 @@
+--- CMakeLists.txt	2020-01-16 11:08:54.000000000 -0600
++++ CMakeLists.txt	2020-03-01 17:16:55.556152413 -0600
+@@ -207,7 +207,11 @@
    DESTINATION "${AMD_COMGR_PACKAGE_PREFIX}")
  
  set(CLANG_LIBS
@@ -11,27 +11,3 @@
 +  clangDriver
 +  clangSerialization)
  
- set(LLD_LIBS
-   lldELF
-@@ -211,8 +215,20 @@
- 
- llvm_map_components_to_libnames(LLVM_LIBS
-   ${LLVM_TARGETS_TO_BUILD}
-+  Option
-   DebugInfoDWARF
--  Symbolize)
-+  Symbolize
-+  Support
-+  Object
-+  BitWriter
-+  MC
-+  MCParser
-+  MCDisassembler
-+  Core
-+  IRReader
-+  CodeGen
-+  Linker
-+  BinaryFormat)
- 
- target_link_libraries(amd_comgr
-   PUBLIC

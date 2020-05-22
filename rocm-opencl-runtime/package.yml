@@ -1,8 +1,8 @@
 name       : ROCm-OpenCL-Runtime
-version    : 3.0.0
-release    : 1
+version    : 3.3.0
+release    : 4
 source     :
-    - https://github.com/RadeonOpenCompute/ROCm-OpenCL-Runtime/archive/roc-3.0.0.tar.gz : c64612fb68289e68fd796987652fc74021d243b088f876ae0a0fc23e9cb6eb28
+    - https://github.com/RadeonOpenCompute/ROCm-OpenCL-Runtime/archive/roc-3.3.0.tar.gz : ac6999f1a491ab066286c2bd6adf50f08f831286f56e267879f9f7eced22f98e
     - https://github.com/KhronosGroup/OpenCL-ICD-Loader/archive/6c03f8b58fafd9dd693eaac826749a5cfad515f8.tar.gz : c94d5bb6dc980c4d41d73e2b81663a19aabe494e923e2d0eec72a4c95b318438
 license    : Open Source License
 component  : programming.devel
@@ -11,6 +11,8 @@ clang      : yes
 description: |
     ROCm OpenCL runtime.
 builddeps  :
+    - pkgconfig(OpenCL)
+    - pkgconfig(gl)
     - findlib
     - git
     - ocaml
@@ -33,7 +35,7 @@ setup      : |
     ls
     ls runtime/device
     %patch < $pkgfiles/01_change_install_location.patch
-    %patch -p0 < $pkgfiles/02_change_amdcompilerh.patch
+    #%patch -p0 < $pkgfiles/02_change_amdcompilerh.patch
     %patch -p0 < $pkgfiles/03_change_opencl.patch
     %patch -p0 < $pkgfiles/05_amdocl64icd.patch
     %patch < $pkgfiles/06_infotest.patch
@@ -96,5 +98,11 @@ install    : |
     %PREFIX%/bin/make install -j1
 
     mkdir -p %installroot%/usr/share/OpenCL/vendors
+    ls
+    pwd
+    cd %installroot%
+    pwd
+    ls
     mv %installroot%/usr/local/etc/OpenCL/vendors/amdocl64.icd %installroot%/usr/share/OpenCL/vendors/amdocl64.icd
+    #mv %installroot%/api/opencl/config/amdocl64.icd %installroot%/usr/share/OpenCL/vendors/amdocl64.icd
     rm -r %installroot%/usr/local/etc

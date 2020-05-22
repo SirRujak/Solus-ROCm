@@ -1,8 +1,8 @@
 name       : ROCR
-version    : 3.0.0
-release    : 2
+version    : 3.3.0
+release    : 4
 source     :
-    - https://github.com/RadeonOpenCompute/ROCR-Runtime/archive/roc-3.0.0.tar.gz : 6d133e285535adef61464f7f0377fe97c480323ebfd242b34b5585b8bb41f99e
+    - https://github.com/RadeonOpenCompute/ROCR-Runtime/archive/rocm-3.3.0.tar.gz : fa2d2d1f8a61d8a6952d377cf288d78c61776c3c2a666f163cafc3aa19ab0b61
 license    : NCSA
 component  : programming.devel
 summary    : This repository includes the user-mode API interfaces and libraries necessary for host applications to launch compute kernels to available HSA ROCm kernel agents.
@@ -16,7 +16,7 @@ setup      : |
     cd src
     mkdir -p build
     cd build
-    %cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=. 
+    %cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=.
 build      : |
     cd src/build
     %make
@@ -27,7 +27,7 @@ install    : |
     ln -sv libhsa-runtime64.so.1 $installdir/%libdir%/libhsa-runtime64.so
     #echo '/usr/lib64/rocm/hsa/lib' > hsa-rocr-dev.conf
     #install -Dm00644 hsa-rocr-dev.conf $installdir/usr/share/ld.so.conf.d/hsa-rocr-dev.conf
-    
+
     cd ../inc
     install -D -m 00644 amd_hsa_common.h $installdir/usr/include/hsa/amd_hsa_common.h
     install -D -m 00644 amd_hsa_elf.h $installdir/usr/include/hsa/amd_hsa_elf.h
@@ -42,12 +42,3 @@ install    : |
     install -D -m 00644 hsa.h $installdir/usr/include/hsa/hsa.h
     install -D -m 00644 hsa_ven_amd_aqlprofile.h $installdir/usr/include/hsa/hsa_ven_amd_aqlprofile.h
     install -D -m 00644 hsa_ven_amd_loader.h $installdir/usr/include/hsa/hsa_ven_amd_loader.h
-
-
-
-    
-
-
-
-
-    

@@ -1,8 +1,8 @@
 name       : rocm-comgr
-version    : 2.10.0
-release    : 2
+version    : 3.3.0
+release    : 4
 source     :
-    - https://github.com/RadeonOpenCompute/ROCm-CompilerSupport/archive/roc-3.0.0.tar.gz : c7f42508ed32c86427387b9e57b3f54a08211c335c7dd35aa084653a1b48b5ef
+    - https://github.com/RadeonOpenCompute/ROCm-CompilerSupport/archive/rocm-3.3.0.tar.gz : 01e2524e0f28ecd6f46c9720f279207de935d826b0172158792aa3ec86af9ca7
 license    : Apache License 2.0
 component  : programming.devel
 summary    : "ROCm llvm,lld,clang"

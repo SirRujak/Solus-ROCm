@@ -1,8 +1,8 @@
 name       : rocm-cmake
-version    : 3.0.0
-release    : 1
+version    : 3.3.0
+release    : 2
 source     :
-    - https://github.com/RadeonOpenCompute/rocm-cmake/archive/roc-3.0.0.tar.gz : 9393fd534a100e8da55f44d0625337d76f3c7890e0297fe690c9e7d384b205ef
+    - https://github.com/RadeonOpenCompute/rocm-cmake/archive/rocm-3.3.0.tar.gz : 76ed3ee8e56cf3246011cf7723c2abda539e1136e7e7f6909bfa45d268b8644f
 license    : MIT
 component  : programming.devel
 summary    : ROCM cmake modules provides cmake modules for common build tasks needed for the ROCM software stack.
@@ -25,5 +25,3 @@ install    : |
     install -Dm00644 bin/share/rocm/cmake/ROCMClangTidy.cmake $installdir/usr/share/rocm/ROCMClangTidy.cmake
     install -Dm00644 bin/share/rocm/cmake/ROCMConfig.cmake $installdir/usr/share/rocm/ROCMConfig.cmake
     install -Dm00644 bin/share/rocm/cmake/ROCMCppCheck.cmake $installdir/usr/share/rocm/ROCMCppCheck.cmake
-
- 

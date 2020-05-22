@@ -1,8 +1,8 @@
 name       : ROCm-Device-Libs
-version    : 3.0.0
-release    : 1
+version    : 3.3.0
+release    : 4
 source     :
-    - https://github.com/RadeonOpenCompute/ROCm-Device-Libs/archive/roc-ocl-3.0.0.tar.gz : 3bb3c6e3be39a9e9dcf616d71f5414014a4c1aa17ff8145baafaf99300241928
+    - https://github.com/RadeonOpenCompute/ROCm-Device-Libs/archive/rocm-ocl-3.3.0.tar.gz : 706b08230790e08ca6a7a2fb7687d6131fd39a562148340e00fa37a6c06769c5
 license    : Open Source License
 component  : programming.devel
 summary    : ROCm Device libraries.

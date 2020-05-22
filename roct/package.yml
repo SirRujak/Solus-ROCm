@@ -1,8 +1,8 @@
 name       : ROCT
-version    : 3.0.0
-release    : 2
-source     : 
-    - https://github.com/RadeonOpenCompute/ROCT-Thunk-Interface/archive/roc-3.0.0.tar.gz : d6d91397fcd926bd90fae8dfe81d69653273e8b68cd47f822576838f2ac96729
+version    : 3.3.0
+release    : 4
+source     :
+    - https://github.com/RadeonOpenCompute/ROCT-Thunk-Interface/archive/roc-3.3.0.tar.gz : 2cabe9d2cfa72031c05d11290837c476182e72d8dec2049298f691143fdd212b
 license    : MIT
 component  : programming.devel
 summary    : This repository includes the user-mode API interfaces used to interact with the ROCk driver. Currently supported agents include only the AMD/ATI Fiji family of discrete GPUs.
@@ -20,11 +20,11 @@ build      : |
     %make
 install    : |
     cd build
-    
+
     install -D -m 00644 libhsakmt.so.1.0.6 $installdir/%libdir%/libhsakmt.so.1.0.6
     ln -sv libhsakmt.so.1.0.6 $installdir/%libdir%/libhsakmt.so.1
     ln -sv libhsakmt.so.1 $installdir/%libdir%/libhsakmt.so
-    
+
     cd ../include
     install -Dm00644 hsakmt.h $installdir/usr/include/hsakmt.h
     install -Dm00644 hsakmttypes.h $installdir/usr/include/hsakmttypes.h
